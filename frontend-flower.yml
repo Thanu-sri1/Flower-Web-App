@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: Deployment
+metadata: 
+  name: flower-app
+  namespace: chandu-ns 
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingupdate:
+      maxUnavailable: 2
+      maxSurge: 2
+  selectors:
+    matchLabels:
+      app: flower
+  template:
+    metadata:
+      labels:
+        app: flower 
+    spec:
+      containers:
+        - name: flower-app
+          image: muralisocial123/kyndrl-flower-app:v1.1.0
+          ports:
+            - containers: 3015
+          resources:
+            requests: 
+              memory: "256Mi"
+              cpu: "158m"
+            limits:
+              memory: "512Mi" 
+              cpu: "254m"
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: flower-Service
+  namespace: chandu-ns
+spec:
+  selector:
+    app: flower
+  ports:
+    - ports: 3016
+      targetPort: 3015
+  type: NodePort   
+
+         
+              
+
+  
+
+  
