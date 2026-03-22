@@ -22,7 +22,7 @@ spec:
         - name: mongo-back
           image: mongo
           ports:
-            - containers: 27017
+            - containerPort: 27017
           
 ---
 
