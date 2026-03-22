@@ -33,8 +33,9 @@ spec:
           env:
             - name: MONGO_URI
               valueFrom:
-                secretKeyRef: flower-secret
-                key: MONGO_URI    
+                secretKeyRef:
+                  name: flower-secret
+                  key: MONGO_URI    
 
 ---
 
