@@ -11,7 +11,7 @@ spec:
     - matches:
       - path:
           type: PathPrefix
-          value: /flower
+          value: /
       filters:
         - type: URLRewrite
           urlRewrite:
