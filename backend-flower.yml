@@ -5,7 +5,7 @@ metadata:
   namespace: chandu-ns
 type: Opaque
 stringData:
-  MONGO_URI=mongodb://mongodb:27017/AFF-Docker
+  MONGO_URI=mongodb://mongo-service:27017/AFF-Docker
 
 ---
 apiVersion: apps/v1
