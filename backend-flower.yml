@@ -1,8 +1,18 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: flower-secret
+  namespace: chandu-ns
+type: Opaque
+stringData:
+  MONGO_URI: mongodb://mongodb:27017/AFF-Docker
+
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
   name: mongo-backend
-  namespace: chandu-ns 
+  namespace: chandu-ns   
 spec:
   replicas: 1
   strategy:

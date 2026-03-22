@@ -30,6 +30,11 @@ spec:
             limits:
               memory: "512Mi" 
               cpu: "254m"
+          env:
+            - name: MONGO_URI
+              valueFrom:
+                secretKeyRef: flower-secret
+                key: MONGO_URI    
 
 ---
 
