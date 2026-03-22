@@ -10,7 +10,7 @@ spec:
     rollingupdate:
       maxUnavailable: 2
       maxSurge: 2
-  selectors:
+  selector:
     matchLabels:
       app: flower
   template:
