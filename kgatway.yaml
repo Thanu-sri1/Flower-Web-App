@@ -19,6 +19,6 @@ spec:
               type: ReplacePrefixMatch
               replacePrefixMatch: /
       backendRefs:
-        - name: ey-ser
+        - name: mongo-service
           port: 3015
    
