@@ -1,34 +1,35 @@
-name: Flower Web App CI
-
+name: Docker CI with Trivy
+ 
 on:
-  pull_request:
-    branches: [ main ]
   push:
-    branches: [ main ]
-
+    branches:
+      - master
+ 
 jobs:
-  ci:
+  docker:
     runs-on: ubuntu-latest
-
+ 
     steps:
-      # 1. Clone the repository
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      # 2. Verify files exist
-      - name: Verify project structure
-        run: |
-          ls -la
-          if [ ! -f index.html ]; then
-            echo "index.html not found!"
-            exit 1
-          fi
-
-      # 3. Optional: Basic JavaScript validation
-      - name: Validate JavaScript files
-        run: |
-          find . -name "*.js" -print
-
-      # 4. CI success message
-      - name: CI completed
-        run: echo "✅ CI pipeline passed successfully"
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+ 
+      - name: Build Docker Image
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/flower:${{ github.sha }} .
+ 
+      - name: Scan Image with Trivy
+        uses: aquasecurity/trivy-action@v0.20.0
+        with:
+          image-ref: ${{ secrets.DOCKER_USERNAME }}/flower:${{ github.sha }}
+          format: 'table'
+          exit-code: '0'                 # Fail pipeline if vulnerabilities found
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
+ 
+      - name: Docker Login
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+ 
+      - name: Push Docker Image
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/flower:${{ github.sha }}
+ 
+ 
